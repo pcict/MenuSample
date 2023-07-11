@@ -33,6 +33,6 @@
         android:layout_marginBottom="8dp"
         android:text="@string/tv_menu_unit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvMenuNameRow"
+        app:layout_constraintStart_toEndOf="@+id/tvMenuPriceRow"
         app:layout_constraintTop_toBottomOf="@+id/tvMenuNameRow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
