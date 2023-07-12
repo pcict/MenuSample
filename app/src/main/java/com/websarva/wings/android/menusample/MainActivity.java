@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,8 +42,17 @@ public class MainActivity extends AppCompatActivity {
         _lvMenu.setAdapter(adapter);
         _lvMenu.setOnItemClickListener(new ListItemClickListener());
 
+        registerForContextMenu(_lvMenu);
+
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_context_menu_list,menu);
+        menu.setHeaderTitle(R.string.menu_list_context_header);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
