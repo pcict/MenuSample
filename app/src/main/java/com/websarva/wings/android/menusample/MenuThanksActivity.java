@@ -1,13 +1,30 @@
 package com.websarva.wings.android.menusample;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MenuThanksActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        boolean returnVal = true;
+        int itemId = item.getItemId();
+
+        if(itemId==android.R.id.home){
+            finish();
+        }
+        else{
+            returnVal = super.onOptionsItemSelected(item);
+        }
+        return  returnVal;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
