@@ -1,5 +1,6 @@
 package com.websarva.wings.android.menusample;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,7 +27,11 @@ public class MenuThanksActivity extends AppCompatActivity {
         tvMenu.setText(menuName);
         tvPrice.setText(menuPrice);
 
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
     }
 }
