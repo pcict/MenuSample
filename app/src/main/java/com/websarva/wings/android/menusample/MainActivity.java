@@ -1,9 +1,13 @@
 package com.websarva.wings.android.menusample;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,6 +43,68 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_options_menu_list,menu);
+        return true;
+
+    }
+
+    private List<Map<String, Object>> createCurryList(){
+        List<Map<String, Object>> menuList = new ArrayList<>();
+        Map<String, Object> menu = new HashMap<>();
+        menu.put("name", "ビーフカレー");
+        menu.put("price", 520);
+        menu.put("desc", "特選スパイスを効かせた国産ビーフ100％のカレーです");
+        menuList.add(menu);
+        menu = new HashMap<>();
+        menu.put("name", "ポークカレー");
+        menu.put("price", 420);
+        menu.put("desc", "特選スパイスを効かせた国産ポーク100％のカレーです");
+        menuList.add(menu);
+        menu = new HashMap<>();
+        menu.put("name", "チキンカレー");
+        menu.put("price", 450);
+        menu.put("desc", "特選スパイスを効かせた国産チキン100％のカレーです");
+        menuList.add(menu);
+        return menuList;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        boolean returnVal = true;
+        //選択されたメニュIDを取得
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.menuListOptionTeishoku){
+            _menuList = createTeishokuList();
+        }
+        else if(itemId == R.id.menuListOptionCurry){
+            _menuList = createCurryList();
+        }
+        else {
+            returnVal = super.onOptionsItemSelected(item);
+        }
+
+//        switch (itemId){
+//            case R.id.menuListOptionTeishoku:
+//                _menuList = createTeishokuList();
+//                break;
+//            case R.id.menuListOptionCurry:
+//                _menuList = createCurryList();
+//                break;
+//            default:
+//                returnVal = super.onOptionsItemSelected(item);
+//                break;
+//        }
+
+        SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, _menuList, R.layout.row,FROM , TO);
+        _lvMenu.setAdapter(adapter);
+        return returnVal;
+    }
 
     private List<Map<String, Object>> createTeishokuList(){
         List<Map<String, Object>> menuList = new ArrayList<>();
@@ -118,6 +184,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 
 }
