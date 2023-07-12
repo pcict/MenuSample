@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +53,19 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_context_menu_list,menu);
         menu.setHeaderTitle(R.string.menu_list_context_header);
+    }
+
+    private void order(Map<String, Object> menu){
+        String menuName = (String) menu.get("name");
+        Integer menuPrice = (Integer) menu.get("price");
+
+        Intent intent = new Intent(MainActivity.this, MenuThanksActivity.class);
+
+        intent.putExtra("menuName", menuName);
+
+        intent.putExtra("menuPrice", menuPrice + "円");
+
+        startActivity(intent);
     }
 
     @Override
@@ -176,7 +190,45 @@ public class MainActivity extends AppCompatActivity {
         return menuList;
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
 
+        boolean returnVal = true;
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        int listPosition = info.position;
+
+        Map<String, Object> menu = _menuList.get(listPosition);
+
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.menuListContextDesc){
+            String desc = (String)menu.get("desc");
+            Toast.makeText(MainActivity.this, desc, Toast.LENGTH_LONG).show();
+        }
+        else if(itemId == R.id.menuListContextOrder){
+            order(menu);
+        }
+        else{
+            returnVal = super.onContextItemSelected(item);
+        }
+
+//        switch (itemId){
+//            case R.id.menuListContextDesc:
+//                String desc = (String)menu.get("desc");
+//                Toast.makeText(MainActivity.this, desc, Toast.LENGTH_LONG).show();
+//                break;
+//            case R.id.menuListContextOrder:
+//                order(menu);
+//                break;
+//            default:
+//                returnVal = super.onContextItemSelected(item);
+//                break;
+//        }
+        return returnVal;
+
+    }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
@@ -184,14 +236,16 @@ public class MainActivity extends AppCompatActivity {
 
             Map<String, Object> item = (Map<String, Object>)parent.getItemAtPosition(position);
 
-            String menuName = (String)item.get("name");
-            Integer menuPrice = (Integer)item.get("price");
-
-            Intent intent = new Intent(MainActivity.this, MenuThanksActivity.class);
-            intent.putExtra("menuName", menuName);
-            intent.putExtra("menuPrice", menuPrice + "円");
-
-            startActivity(intent);
+            order(item);
+//            P.212
+//            String menuName = (String)item.get("name");
+//            Integer menuPrice = (Integer)item.get("price");
+//
+//            Intent intent = new Intent(MainActivity.this, MenuThanksActivity.class);
+//            intent.putExtra("menuName", menuName);
+//            intent.putExtra("menuPrice", menuPrice + "円");
+//
+//            startActivity(intent);
         }
     }
 
